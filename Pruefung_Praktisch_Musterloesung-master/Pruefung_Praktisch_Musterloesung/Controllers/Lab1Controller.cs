@@ -11,7 +11,15 @@ namespace Pruefung_Praktisch_Musterloesung.Controllers
     {
         /**
          * 
-         * ANTWORTEN BITTE HIER
+         * ANTWORTEN BITTE HIER:
+         * 1.1: Der Name der Datenbankdatei wird in der URL mitgegeben. Kann von einem Hacker benutzt werden, um eine eigene Datenbank anzubinden.
+         * 1.2: Der Name des Bildes wird per URL mitgegeben.
+         * 
+         * 2.1: http://localhost:50374/Lab1/index?file="my_own_db"
+         * 2.2: http://localhost:50374/Lab1/index?file="stolendata.txt"
+         * 
+         * 3.1: Die URL kann dazu verwendet werden, eine Datenbankdatei anzusprechen. Dies kann dazu führen, dass ein unauthorisierter Benutzer plötzlich Zugriff auf die Daten hat.
+         * 3.2: Die URL kann dazu verwendet werden, eine andere Datei anzusprechen.
          * 
          * */
 
