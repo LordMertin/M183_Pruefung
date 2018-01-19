@@ -14,6 +14,13 @@ namespace Pruefung_Praktisch_Musterloesung.Controllers
         /**
         * 
         * ANTWORTEN BITTE HIER
+        * 1.1: SQL Injection
+        * 1.2: Stored XSS
+        * 
+        * 2.1: Nutzer gibt in Textbox eine SQL abfrage/ein zusätzliche Teil der Abfrage ein, sodass die rückgabe seine Abfrage enthhält.
+		*      Z.B: OR 1=1 --> gibt alle Einträge zurück
+        * 2.2: JavaScript Code in die Datenbank Speichern z.B. via Kommentar-funktion
+        *      Z.B <script> Irgendwas machen </script>
         * 
         * */
 
