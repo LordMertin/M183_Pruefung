@@ -19,6 +19,15 @@ namespace Pruefung_Praktisch_Musterloesung.Controllers
         * 
         * ANTWORTEN BITTE HIER
         * 
+        * 1.1: Die Session ID wird nicht überprüft
+        * 1.2: Der verwendete Browser wird nicht überprüft
+        * 
+        * 2.1: http://localhost:50374/Lab2/login?sid=ichbidemertin
+        * 2.2: http://localhost:50374/Lab2/
+        * 
+        * 3..1: Wenn sich die Session ID nicht bei einem neuen Request ändert, kann ein Hacker die SessionID eines anderen users stehlen.
+        * 3.2: Wenn der Browser nicht überprüft wird, können keine Gegenmassnahmen getroffen werden, falls sich ein neuer/verdächtiger Browser einloggt
+        * 
         * */
 
         public ActionResult Index() {
