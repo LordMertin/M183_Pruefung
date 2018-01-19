@@ -30,15 +30,20 @@ namespace Pruefung_Praktisch_Musterloesung.Controllers
         * 
         * */
 
-        public ActionResult Index() {
+        public ActionResult Index()
+        {
 
             var sessionid = Request.QueryString["sid"];
 
             if (string.IsNullOrEmpty(sessionid))
             {
-                var hash = (new SHA1Managed()).ComputeHash(Encoding.UTF8.GetBytes(DateTime.Now.ToString()));
-                sessionid = string.Join("", hash.Select(b => b.ToString("x2")).ToArray());
+                var hash2 = (new SHA1Managed()).ComputeHash(Encoding.UTF8.GetBytes(DateTime.Now.ToString()));
+                sessionid = string.Join("", hash2.Select(b => b.ToString("x2")).ToArray());
             }
+
+            // Hier session ID neu generieren für folgende Requests
+            var hash = (new SHA1Managed()).ComputeHash(Encoding.UTF8.GetBytes(DateTime.Now.ToString()));
+            sessionid = string.Join("", hash.Select(b => b.ToString("x2")).ToArray());
 
             ViewBag.sessionid = sessionid;
 
@@ -52,28 +57,38 @@ namespace Pruefung_Praktisch_Musterloesung.Controllers
             var password = Request["password"];
             var sessionid = Request.QueryString["sid"];
 
-            // hints:
-            //var used_browser = Request.Browser.Platform;
-            //var ip = Request.UserHostAddress;
+            // Browser und IP überprüfen
+            var used_browser = Request.Browser.Platform;
+            var ip = Request.UserHostAddress;
 
-            Lab2Userlogin model = new Lab2Userlogin();
-
-            if (model.checkCredentials(username, password))
+            if (used_browser == "browser that was used before and is known" && ip == "IP that is used frequently by the user")
             {
-                model.storeSessionInfos(username, password, sessionid);
+                Lab2Userlogin model = new Lab2Userlogin();
 
-                HttpCookie c = new HttpCookie("sid");
-                c.Expires = DateTime.Now.AddMonths(2);
-                c.Value = sessionid;
-                Response.Cookies.Add(c);
+                if (model.checkCredentials(username, password))
+                {
+                    model.storeSessionInfos(username, password, sessionid);
 
-                return RedirectToAction("Backend", "Lab2");
+                    HttpCookie c = new HttpCookie("sid");
+                    c.Expires = DateTime.Now.AddMonths(2);
+                    c.Value = sessionid;
+                    Response.Cookies.Add(c);
+
+                    return RedirectToAction("Backend", "Lab2");
+                }
+                else
+                {
+                    ViewBag.message = "Wrong Credentials";
+                    return View();
+                }
             }
             else
             {
-                ViewBag.message = "Wrong Credentials";
+                ViewBag.message = "Browser or IP are suspicious";
                 return View();
             }
+
+
         }
 
         public ActionResult Backend()
@@ -83,13 +98,13 @@ namespace Pruefung_Praktisch_Musterloesung.Controllers
             if (Request.Cookies.AllKeys.Contains("sid"))
             {
                 sessionid = Request.Cookies["sid"].Value.ToString();
-            }           
+            }
 
             if (!string.IsNullOrEmpty(Request.QueryString["sid"]))
             {
                 sessionid = Request.QueryString["sid"];
             }
-            
+
             // hints:
             //var used_browser = Request.Browser.Platform;
             //var ip = Request.UserHostAddress;
@@ -103,7 +118,7 @@ namespace Pruefung_Praktisch_Musterloesung.Controllers
             else
             {
                 return RedirectToAction("Index", "Lab2");
-            }              
+            }
         }
     }
 }
